@@ -1,15 +1,45 @@
 var express = require('express');
+var path = require('path');
+var logger = require('morgan');
+var bodyParser = require('body-parser');
+var routes = require('./routes/index');
+
 var app = express();
 
-var port = process.env.PORT || 3000;
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
 
-var router = express.Router();
+// Use routes.index to map URLs to handlers in ./api
+app.use('/', routes);
 
-router.get('/', function(req, res) {
-	res.json({ message: 'Hello World! Welcome to the API.' });
+/// catch 404 and forwarding to error handler
+app.use(function (req, res, next) {
+	var err = new Error('Not Found');
+	err.status = 404;
+	next(err);
 });
 
-app.use('/api', router);
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+	app.use(function (err, req, res, next) {
+		var status = err.status || 500;
+		res.json({
+			message: err.message,
+			error: err
+		}, status);
+	});
+}
 
-app.listen(port);
-console.log('Magic happens on port ' + port);
+// production error handler
+// no stacktraces leaked to user
+app.use(function (err, req, res, next) {
+	var status = err.status || 500;
+	res.json({
+		message: err.message
+	}, status);
+});
+
+module.exports = app;
