@@ -4,6 +4,6 @@ var gulp = require('gulp'),
 gulp.task('serve', function () {
 	nodemon({script: 'bin/www'})
 	.on('restart', function () {
-		console.log('reloaded...')
+		console.log('reloaded...');
 	});
 });

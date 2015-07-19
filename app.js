@@ -26,10 +26,10 @@ app.use(function (req, res, next) {
 if (app.get('env') === 'development') {
 	app.use(function (err, req, res, next) {
 		var status = err.status || 500;
-		res.json({
+		response.status(status).json({
 			message: err.message,
 			error: err
-		}, status);
+		});
 	});
 }
 
@@ -37,9 +37,9 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function (err, req, res, next) {
 	var status = err.status || 500;
-	res.json({
+	response.status(status).json({
 		message: err.message
-	}, status);
+	});
 });
 
 module.exports = app;
