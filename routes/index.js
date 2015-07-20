@@ -1,24 +1,16 @@
-var express = require('express');
-var router = express.Router();
-var User = require('../api/user/controllers');
+var express = require('express'),
+	router = express.Router(),
+	User = require('../api/user/controller.js'),
+	Test = require('../api/test/controller.js');
 
-// var roleRequired = function (allowedLevels) {
-//     return function (req, res, next) {
-//         if (allowedLevels.indexOf(req.user.role) > -1) {
-//             next();
-//         } else {
-//             return res.json({
-//                 message: "You are not authorized"
-//             }, 403);
-//         }
-//     };
-// };
+// TEST ROUTE
+router.get('/api/hello', Test.hello);
 
-router.get('/api/hello', User.signup);
-
-/* Map URLs to handlers in this file */
-// router.post('/api/authenticate', User.authenticate);
-// router.post('/admin', User.createAdmin);
-
+// USER ROUTES
+router.get('/api/users', User.getUsers);
+router.get('/api/users/:id', User.getUserById);
+router.post('/api/users', User.addUser);
+router.put('/api/users/:id', User.updateUser);
+router.delete('/api/users/:id', User.deleteUser);
 
 module.exports = router;

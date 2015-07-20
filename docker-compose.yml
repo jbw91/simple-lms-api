@@ -4,7 +4,7 @@ db:
         - MYSQL_ROOT_PASSWORD=secretpassword
         - MYSQL_DATABASE=simplelms
         - MYSQL_USER=simplelms
-        - MYSQL_PASSWORD=password
+        - MYSQL_PASSWORD=simplelmspw
 app:
     build: .
     command: node ./bin/www
