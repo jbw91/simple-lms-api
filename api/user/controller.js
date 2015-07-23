@@ -2,9 +2,7 @@ var pool = require('../../config/pool.js'),
 	user = require('../../models/user.js');
 
 exports.getUsers = function (req, res) {
-	var sql = 'SELECT u.userid, u.firstname, u.lastname, u.email, u.roleid, r.description rolename' +
-		' FROM user u, roles r' +
-		' WHERE u.roleid=r.id';
+	var sql = 'SELECT * FROM user';
 
 	pool.run(req, res, sql, function(req,res,result){
 		var users = [];
@@ -17,10 +15,7 @@ exports.getUsers = function (req, res) {
 
 exports.getUserById = function (req, res) {
 	var id = req.params.id;
-	var sql = 'SELECT u.userid, u.firstname, u.lastname, u.email, u.roleid, r.description rolename' +
-		' FROM user u, roles r' +
-		' WHERE u.userid=' + id +
-		' AND u.roleid=r.id';
+	var sql = 'SELECT * FROM user WHERE userid=\'' + id + '\'';
 
 	pool.run(req, res, sql, function(req,res,result){
 		console.log('RESULT:',result);
@@ -35,8 +30,8 @@ exports.getUserById = function (req, res) {
 
 exports.addUser = function (req, res) {
 	var newUser = req.body;
-	var sql = 'INSERT INTO user (userid, firstname, lastname, email, roleid)' +
-	' VALUES (\'' + newUser.id + '\',\'' + newUser.firstName + '\',\'' + newUser.lastName + '\',\'' + newUser.email + '\',' + newUser.role.id + ')';
+	var sql = 'INSERT INTO user (userid, firstname, lastname, email)' +
+	' VALUES (\'' + newUser.id + '\',\'' + newUser.firstName + '\',\'' + newUser.lastName + '\',\'' + newUser.email + '\')';
 
 	pool.run(req, res, sql, function(req,res,result){
 		console.log('RESULT:',result);
@@ -47,7 +42,7 @@ exports.addUser = function (req, res) {
 exports.updateUser = function (req, res) {
 	var user = req.body;
 	var id = req.params.id;
-	var sql = 'UPDATE user SET firstname=\'' + user.firstName + '\', lastname=\'' + user.lastName + '\', email=\'' + user.email + '\', roleid=\'' + user.role.id + '\' WHERE userid=\'' + id + '\'';
+	var sql = 'UPDATE user SET firstname=\'' + user.firstName + '\', lastname=\'' + user.lastName + '\', email=\'' + user.email + '\' WHERE userid=\'' + id + '\'';
 
 	pool.run(req, res, sql, function(req,res,result){
 		console.log('RESULT:',result);
@@ -64,3 +59,5 @@ exports.deleteUser = function (req, res) {
 		res.status(200).end();
 	});
 };
+
+// TODO: Implement the methods for roles found in ../../routes/index.js
