@@ -7,7 +7,7 @@ db:
         - MYSQL_PASSWORD=simplelmspw
 app:
     build: .
-    command: node ./bin/www
+    command: node ./app/bin/www
     volumes:
         - .:/webapp_root
     ports:

@@ -1,4 +1,5 @@
 // Load the module dependencies
+'use strict';
 var	mysql = require('mysql');
 
 var pool = mysql.createPool({
@@ -15,7 +16,7 @@ function run(req,res,queryString,callback){
 	pool.getConnection(function(err,conn){
 		if (err) {
 			console.log('Database error');
-			var error = {"code" : 100, "status" : "Error in connection database"};
+			var error = {'code' : 100, 'status' : 'Error in connection database'};
 			callback(req,res,error);
 		}
 		conn.query(queryString,function(err,rows){
