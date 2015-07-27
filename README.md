@@ -136,3 +136,11 @@ Returns an object with the user's id and a list of roles they are currently gran
 	]
 }
 ```
+
+### PUT /api/users/{id}/roles/{roleId}/group/{groupId}
+
+A `PUT` request to this endpoint will simply return a 200 OK status. No request body is required, simply the path params you provide in the request. It will add the role you provide with its associated group.
+
+### DELETE /api/users/{id}/roles/{roleId}/group/{groupId}
+
+A `DELETE` request to this endpoint will simply return a 200 OK status. No request body is required, simply the path params you provide in the request. It will remove the role you provide that is in your provided group.

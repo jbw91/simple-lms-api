@@ -78,9 +78,19 @@ exports.getUserRoles = function (req, res) {
 };
 
 exports.addUserRole = function (req, res) {
-	res.status(200).json({message:'Not Implemented Yet'});
+	var sql = 'INSERT INTO userroles (userid,roleid,groupid) VALUES (' + req.params.id + ',' + req.params.roleId + ',' + req.params.groupId + ')';
+
+	pool.run(req, res, sql, function(req,res,result){
+		console.log('RESULT:',result);
+		res.status(200).end();
+	});
 };
 
 exports.deleteUserRole = function (req, res) {
-	res.status(200).json({message:'Not Implemented Yet'});
+	var sql = 'DELETE FROM userroles WHERE userid=' + req.params.id + ' AND roleid=' + req.params.roleId + ' AND groupid=' + req.params.groupId;
+
+	pool.run(req, res, sql, function(req,res,result){
+		console.log('RESULT:',result);
+		res.status(200).end();
+	});
 };
