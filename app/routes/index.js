@@ -17,6 +17,6 @@ router.delete('/api/users/:id', User.deleteUser);
 // USER ROLE ROUTES
 router.get('/api/users/:id/roles', User.getUserRoles);
 router.put('/api/users/:id/roles/:roleId/group/:groupId', User.addUserRole);
-router.delete('/api/users/:id/roles/:roleId/group/:groupid', User.deleteUserRole);
+router.delete('/api/users/:id/roles/:roleId/group/:groupId', User.deleteUserRole);
 
 module.exports = router;

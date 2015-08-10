@@ -1,6 +1,7 @@
 'use strict';
 var pool = require('../../config/pool.js'),
-	user = require('../../models/user.js');
+	user = require('../../models/user/user.js'),
+	role = require('../../models/user/role.js');
 
 exports.getUsers = function (req, res) {
 	var sql = 'SELECT * FROM user';
@@ -63,13 +64,33 @@ exports.deleteUser = function (req, res) {
 
 // TODO: Implement the methods for roles found in ../../routes/index.js
 exports.getUserRoles = function (req, res) {
-	res.status(200).json({message:'Not Implemented Yet'});
+	var sql = 'SELECT u.userid, u.roleid, r.description rolename, u.groupid, g.name groupname, ' +
+				'g.grouptype grouptypeid, gt.description grouptypename ' +
+				'FROM userroles u, roles r, groups g, grouptypes gt ' +
+				'WHERE u.userid=' + req.params.id + ' ' +
+				'AND u.roleid=r.id ' +
+				'AND u.groupid=g.id ' +
+				'AND g.grouptype=gt.id';
+
+	pool.run(req, res, sql, function(req,res,result){
+		res.status(200).json(role.createRole(result));
+	});
 };
 
 exports.addUserRole = function (req, res) {
-	res.status(200).json({message:'Not Implemented Yet'});
+	var sql = 'INSERT INTO userroles (userid,roleid,groupid) VALUES (' + req.params.id + ',' + req.params.roleId + ',' + req.params.groupId + ')';
+
+	pool.run(req, res, sql, function(req,res,result){
+		console.log('RESULT:',result);
+		res.status(200).end();
+	});
 };
 
 exports.deleteUserRole = function (req, res) {
-	res.status(200).json({message:'Not Implemented Yet'});
+	var sql = 'DELETE FROM userroles WHERE userid=' + req.params.id + ' AND roleid=' + req.params.roleId + ' AND groupid=' + req.params.groupId;
+
+	pool.run(req, res, sql, function(req,res,result){
+		console.log('RESULT:',result);
+		res.status(200).end();
+	});
 };
